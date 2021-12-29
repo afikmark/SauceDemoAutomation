@@ -33,5 +33,10 @@ namespace SauceDemoAutomation.PageObjects
 			return el.Text;
 		}
 
+		public void TakeElementScreenShot(WebElement element, string screenShotPath,string screenShotName)
+        {
+			element.GetScreenshot().SaveAsFile(screenShotPath+screenShotName+".PNG");
+        }
+
 	}
 }

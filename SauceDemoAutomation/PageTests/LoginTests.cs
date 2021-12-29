@@ -13,6 +13,10 @@ namespace SauceDemoAutomation.PageTests
     {
         private const string standard_User = "standard_user";
         private const string globalPassword = "secret_sauce";
+
+        public string Getstandard_User { get; }
+        public string GetGlobalPassword { get; }
+
         [Test]
         public void LoginValidUser()
         {
