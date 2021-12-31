@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SauceDemoAutomation.PageTests
 {
+    [Property("Owner", "Afik")]
     class UITests : BaseTest
     {
         [SetUp]

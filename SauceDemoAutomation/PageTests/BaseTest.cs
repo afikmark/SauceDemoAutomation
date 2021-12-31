@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SauceDemoAutomation.PageTests
 {
+    [Property("Owner", "Afik")]
     public class BaseTest
     {
        public IWebDriver driver;
