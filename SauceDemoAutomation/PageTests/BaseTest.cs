@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace SauceDemoAutomation.PageTests
     public class BaseTest
     {
        public IWebDriver driver;
-        private const string swagLabsURL = "https://www.saucedemo.com/";
+        private  string swagLabsURL = ConfigurationManager.AppSettings.Get("swagLabsURL");
         [OneTimeSetUp]
         public void SetUp()
         {

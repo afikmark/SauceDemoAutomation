@@ -1,6 +1,8 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,7 +46,7 @@ namespace SauceDemoAutomation.PageObjects
                     if (itemText.Contains(blackListStringLower))
                     {
                         Console.WriteLine("A black listed word was found" + ":" + blackListString);
-                        var screenShotsFolder = profileFolderPath + @"\source\repos\afikmark\SauceDemoAutomation\resources\CaptureSC\";
+                        var screenShotsFolder = profileFolderPath + ConfigurationManager.AppSettings.Get("screenShotFolder");
                         var counter = 0;
                         var fileName = blackListString + counter++;
                         TakeElementScreenShot(item, screenShotsFolder, fileName);
@@ -57,9 +59,9 @@ namespace SauceDemoAutomation.PageObjects
         public bool ComparePictures()
         {
             WebElement firstItem = (WebElement)itemsList.ElementAt(0);
-                var screenShotPath = profileFolderPath + @"\source\repos\afikmark\SauceDemoAutomation\resources\CaptureSC\";
+                var screenShotPath = profileFolderPath + ConfigurationManager.AppSettings.Get("screenShotFolder");
                 TakeElementScreenShot(firstItem, screenShotPath, "firstItemPicture");
-            var firstItemExpectedPath = profileFolderPath + @"\source\repos\afikmark\SauceDemoAutomation\resources\CaptureSC\ExpectedSC\firstProductItem.PNG";
+            var firstItemExpectedPath = profileFolderPath + ConfigurationManager.AppSettings.Get("firstItemExpectedPath");
             var areImgEqual = CompareBitmaps(screenShotPath, firstItemExpectedPath);
                 return areImgEqual;
         }
