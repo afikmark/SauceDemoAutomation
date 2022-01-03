@@ -13,11 +13,11 @@ namespace SauceDemoAutomation.PageTests
     [Property("Owner", "Afik")]
     public class BaseTest
     {
-       public IWebDriver driver;
-        private  string swagLabsURL = ConfigurationManager.AppSettings.Get("swagLabsURL");
+        public IWebDriver driver;
         [OneTimeSetUp]
         public void SetUp()
         {
+            var swagLabsURL = "https://www.saucedemo.com/";
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Url = swagLabsURL;
@@ -29,6 +29,6 @@ namespace SauceDemoAutomation.PageTests
             driver.Quit();
         }
 
-       
+
     }
 }
