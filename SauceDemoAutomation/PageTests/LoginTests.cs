@@ -29,32 +29,32 @@ namespace SauceDemoAutomation.PageTests
           
             ProductsPage prodPage = new ProductsPage(driver);
             var titleString = prodPage.title.Text;
-            Assume.That(titleString, Is.EqualTo(expectedTitle).IgnoreCase);
+            Assert.That(titleString, Is.EqualTo(expectedTitle).IgnoreCase);
             //Logout and test title is the same as expected 
             prodPage.logOut();
             var loginPageTitleText = driver.Title;
-            Assume.That(loginPageTitleText, Is.EqualTo(loginTitleExpected));
+            Assert.That(loginPageTitleText, Is.EqualTo(loginTitleExpected));
 
 
             //login with locked out user- test error 
             loginPage.login(lockedOutUser, globalPassword);
             var loginError = loginPage.GetLoginError();
             var expectedError = "Epic sadface: Sorry, this user has been locked out.";
-            Assume.That(loginError, Is.EqualTo(expectedError));
+            Assert.That(loginError, Is.EqualTo(expectedError));
 
             loginPage.login(problemUser, globalPassword);
             var isFirstItemCorrect = prodPage.ComparePictures();
-            Assume.That(isFirstItemCorrect != true);
+            Assert.That(isFirstItemCorrect, "first item in shopping list does not match expected.");
 
             prodPage.logOut();
-            Assume.That(loginPageTitleText, Is.EqualTo(loginTitleExpected));
+            Assert.That(loginPageTitleText, Is.EqualTo(loginTitleExpected));
 
             //Login on average takes up to 5 seconds
             loginPage.login(performenceGlitchUser, globalPassword);
             loginPage.implictWait(5000);
-            Assume.That(prodPage.title.Text, Is.EqualTo(expectedTitle).IgnoreCase);
+            Assert.That(prodPage.title.Text, Is.EqualTo(expectedTitle).IgnoreCase);
             prodPage.logOut();
-            Assume.That(loginPageTitleText, Is.EqualTo(loginTitleExpected));
+            Assert.That(loginPageTitleText, Is.EqualTo(loginTitleExpected));
 
         }
     }

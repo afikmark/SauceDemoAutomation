@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,9 +60,10 @@ namespace SauceDemoAutomation.PageObjects
         public bool ComparePictures()
         {
             WebElement firstItem = (WebElement)itemsList.ElementAt(0);
-                var screenShotPath = profileFolderPath + ConfigurationManager.AppSettings.Get("screenShotFolder");
-                TakeElementScreenShot(firstItem, screenShotPath, "firstItemPicture");
-            var firstItemExpectedPath = profileFolderPath + ConfigurationManager.AppSettings.Get("firstItemExpectedPath");
+                var screenShotFolderPath =  profileFolderPath + @"\source\repos\afikmark\SauceDemoAutomation\resources\CaptureSC\";
+                TakeElementScreenShot(firstItem, screenShotFolderPath, "firstItemPicture");
+            var firstItemExpectedPath = profileFolderPath + @"\source\repos\afikmark\SauceDemoAutomation\resources\ExpectedSC\firstProductItem.png";
+            var screenShotPath = screenShotFolderPath + "firstItemPicture";
             var areImgEqual = CompareBitmaps(screenShotPath, firstItemExpectedPath);
                 return areImgEqual;
         }
