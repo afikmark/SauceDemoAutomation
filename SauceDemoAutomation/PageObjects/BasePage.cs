@@ -39,12 +39,14 @@ namespace SauceDemoAutomation.PageObjects
 		public void FillText(IWebElement el, string text)
 		{
 			el.Clear();
+			HighlightElement(el, "yellow");
 			el.SendKeys(text);
 		}
 
 		public void Click(IWebElement el)
 		{
 		
+			HighlightElement(el, "orange");
 			el.Click();
 		}
 
@@ -81,6 +83,20 @@ namespace SauceDemoAutomation.PageObjects
         {
 			return Driver.Title;
         }
+
+		private void HighlightElement(IWebElement element, String color)
+		{
+			
+			var originalStyle = element.GetAttribute("style");
+			var newStyle = "background-color:" + color +  ";" + originalStyle;
+			IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
+
+			js.ExecuteScript("var tmpArguments = arguments;setTimeout(function () {tmpArguments[0].setAttribute('style', '" + newStyle + "');},0);", element);
+
+			js.ExecuteScript("var tmpArguments = arguments;setTimeout(function () {tmpArguments[0].setAttribute('style', '"
+					+ originalStyle + "');},400);", element);
+
+		}
 
 	}
 }
