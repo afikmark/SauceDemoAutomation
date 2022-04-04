@@ -28,7 +28,7 @@ namespace SauceDemoAutomation.PageTests
             blackListedWords.Add("Automate");
             blackListedWords.Add("Devlopment");
             ProductsPage productsPage = new ProductsPage(driver);
-            var blackListStringsFound =productsPage.FindDescriptionErrors(blackListedWords);
+            var blackListStringsFound = productsPage.FindDescriptionErrors(blackListedWords);
             Assert.That(!blackListStringsFound);
         }
     }

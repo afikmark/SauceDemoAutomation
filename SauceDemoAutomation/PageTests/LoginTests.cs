@@ -9,24 +9,24 @@ using System.Threading.Tasks;
 
 namespace SauceDemoAutomation.PageTests
 {
-    [Property("Owner","Afik")]
+    [Property("Owner", "Afik")]
     class LoginTests : BaseTest
     {
         private const string globalPassword = "secret_sauce";
         private const string expectedTitle = "Products";
         private const string loginTitleExpected = "Swag Labs";
-       
+
         public string Getstandard_User { get; }
         public string GetGlobalPassword { get; }
 
-   
+
         [TestCase("standard_user", "locked_out_user", "problem_user", "performance_glitch_user")]
-        public void TC01_LoginAllUsers(string standardUser,string lockedOutUser, string problemUser, string performenceGlitchUser)
+        public void TC01_LoginAllUsers(string standardUser, string lockedOutUser, string problemUser, string performenceGlitchUser)
         {
             LoginPage loginPage = new LoginPage(driver);
             //login with standard user
             loginPage.login(standardUser, globalPassword);
-          
+
             ProductsPage prodPage = new ProductsPage(driver);
             var titleString = prodPage.title.Text;
             Assert.That(titleString, Is.EqualTo(expectedTitle).IgnoreCase);
@@ -44,7 +44,7 @@ namespace SauceDemoAutomation.PageTests
 
             loginPage.login(problemUser, globalPassword);
             var isFirstItemCorrect = prodPage.ComparePictures();
-            Assert.That(isFirstItemCorrect, "first item in shopping list does not match expected.");
+            AssertionException.Equals(isFirstItemCorrect, "first item in shopping list does not match expected.");
 
             prodPage.logOut();
             Assert.That(loginPageTitleText, Is.EqualTo(loginTitleExpected));

@@ -55,8 +55,9 @@ namespace SauceDemoAutomation.PageObjects
 
 		public void TakeElementScreenShot(WebElement element, string screenShotPath,string screenShotName)
         {
-			element.GetScreenshot().SaveAsFile(screenShotPath+screenShotName+".PNG");
-        }
+            element.GetScreenshot().SaveAsFile(screenShotPath + @"\" + screenShotName +".PNG");
+
+		}
 
 
 		public bool CompareBitmaps(string firstImgPath, string secondImgPath)

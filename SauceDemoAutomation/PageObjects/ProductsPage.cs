@@ -26,6 +26,10 @@ namespace SauceDemoAutomation.PageObjects
 
         private string profileFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
+        private string programData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+
+
+
 
 
         public void logOut()
@@ -60,11 +64,21 @@ namespace SauceDemoAutomation.PageObjects
         public bool ComparePictures()
         {
             WebElement firstItem = (WebElement)itemsList.ElementAt(0);
-                var screenShotFolderPath =  profileFolderPath + @"\source\repos\afikmark\SauceDemoAutomation\resources\CaptureSC\";
-                TakeElementScreenShot(firstItem, screenShotFolderPath, "firstItemPicture");
+            var screenShotFolderPath = programData;
+            //var screenShotFolderPath = profileFolderPath + @"\source\repos\afikmark\SauceDemoAutomation\resources\CaptureSC\";
+            TakeElementScreenShot(firstItem, screenShotFolderPath, "firstItemPicture");
             var firstItemExpectedPath = profileFolderPath + @"\source\repos\afikmark\SauceDemoAutomation\resources\ExpectedSC\firstProductItem.png";
-            var screenShotPath = screenShotFolderPath + "firstItemPicture";
+            var screenShotPath = screenShotFolderPath + @"\" + "firstItemPicture";
             var areImgEqual = CompareBitmaps(screenShotPath, firstItemExpectedPath);
+            try
+            {
+
+            File.Delete(screenShotPath + ".PNG");
+
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
                 return areImgEqual;
         }
 
