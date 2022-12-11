@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -16,6 +17,7 @@ namespace SauceDemoAutomation.PageObjects
         public ProductsPage(IWebDriver driver) : base(driver) { }
 
         public IWebElement title => Driver.FindElement(By.CssSelector(".title"));
+        public IList<IWebElement> itemsImgList => Driver.FindElements(By.CssSelector(".inventory_item img"));
         public IList<IWebElement> itemsList => Driver.FindElements(By.CssSelector(".inventory_item"));
 
         public IWebElement burgerBtn => Driver.FindElement(By.CssSelector("#react-burger-menu-btn"));
@@ -24,7 +26,7 @@ namespace SauceDemoAutomation.PageObjects
 
         public IWebElement logoutBtn => Driver.FindElement(By.CssSelector("#logout_sidebar_link"));
 
-        private string profileFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+      
 
 
 
@@ -35,9 +37,10 @@ namespace SauceDemoAutomation.PageObjects
             Click(logoutBtn);
         }
 
-        public bool FindDescriptionErrors(IList<string> blackList)
+        public Tuple<bool,IList> FindDescriptionErrors(IList<string> blackList)
         {
             var isWordFound = false;
+            List<string> blackListedWordsFound = new List<string>();
             foreach (WebElement item in itemsList)
             {
                 foreach (string blackListString in blackList)
@@ -47,25 +50,19 @@ namespace SauceDemoAutomation.PageObjects
                     if (itemText.Contains(blackListStringLower))
                     {
                         Console.WriteLine("A black listed word was found" + ":" + blackListString);
-                        var screenShotsFolder = profileFolderPath + ConfigurationManager.AppSettings.Get("screenShotFolder");
-                        var counter = 0;
-                        var fileName = blackListString + counter++;
-                        TakeElementScreenShot(item, screenShotsFolder, fileName);
+                        isWordFound = true;    
+                        blackListedWordsFound.Add(blackListString);
+                
                     }
                 }
             }
-            return isWordFound;
+            return new Tuple<bool, IList>(isWordFound, blackListedWordsFound);
         }
-
-        public bool ComparePictures()
+        public string GetFirstPicture()
         {
-            WebElement firstItem = (WebElement)itemsList.ElementAt(0);
-                var screenShotFolderPath =  profileFolderPath + @"\source\repos\afikmark\SauceDemoAutomation\resources\CaptureSC\";
-                TakeElementScreenShot(firstItem, screenShotFolderPath, "firstItemPicture");
-            var firstItemExpectedPath = profileFolderPath + @"\source\repos\afikmark\SauceDemoAutomation\resources\ExpectedSC\firstProductItem.png";
-            var screenShotPath = screenShotFolderPath + "firstItemPicture";
-            var areImgEqual = CompareBitmaps(screenShotPath, firstItemExpectedPath);
-                return areImgEqual;
+            WebElement firstItem = (WebElement)itemsImgList.ElementAt(0);
+            string firstItemStr = firstItem.GetAttribute("src");
+            return firstItemStr;
         }
 
         

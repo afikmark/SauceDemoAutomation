@@ -1,11 +1,7 @@
 ﻿using NUnit.Framework;
 using SauceDemoAutomation.PageObjects;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SauceDemoAutomation.PageTests
 {
@@ -15,21 +11,24 @@ namespace SauceDemoAutomation.PageTests
         [SetUp]
         public void Login()
         {
-            LoginPage loginPage = new LoginPage(driver);
-            LoginTests loginTests = new LoginTests();
+            LoginPage loginPage = new (driver);
             loginPage.login("standard_user", "secret_sauce");
         }
         [Test]
-        public void ProductErros()
+        public void TestProductErros()
         {
-            List<string> blackListedWords = new List<string>();
-            blackListedWords.Add("Test");
-            blackListedWords.Add("Automation");
-            blackListedWords.Add("Automate");
-            blackListedWords.Add("Devlopment");
-            ProductsPage productsPage = new ProductsPage(driver);
+            List<string> blackListedWords = new List<string>
+            {
+                "Test",
+                "Automation",
+                "Automate",
+                "Devlopment"
+            };
+            ProductsPage productsPage = new(driver);
             var blackListStringsFound =productsPage.FindDescriptionErrors(blackListedWords);
-            Assert.That(!blackListStringsFound);
+            var isBlackListedWordsFound = blackListStringsFound.Item1;
+            var blackListedWordsList = blackListStringsFound.Item2;
+            Assert.That(isBlackListedWordsFound, Is.False,$"black listed words found! {blackListedWordsList}");
         }
     }
 }

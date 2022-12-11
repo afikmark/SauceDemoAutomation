@@ -1,11 +1,6 @@
 ﻿using NUnit.Framework;
 using SauceDemoAutomation.PageObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace SauceDemoAutomation.PageTests
 {
@@ -19,43 +14,51 @@ namespace SauceDemoAutomation.PageTests
         public string Getstandard_User { get; }
         public string GetGlobalPassword { get; }
 
-   
-        [TestCase("standard_user", "locked_out_user", "problem_user", "performance_glitch_user")]
-        public void TC01_LoginAllUsers(string standardUser,string lockedOutUser, string problemUser, string performenceGlitchUser)
+        [TestCase("standard_user")]
+
+        public void TC01_LoginStandardUser(string standardUser)
         {
-            LoginPage loginPage = new LoginPage(driver);
-            //login with standard user
+            LoginPage loginPage = new(driver);
             loginPage.login(standardUser, globalPassword);
-          
-            ProductsPage prodPage = new ProductsPage(driver);
+            ProductsPage prodPage = new(driver);
             var titleString = prodPage.title.Text;
             Assert.That(titleString, Is.EqualTo(expectedTitle).IgnoreCase);
-            //Logout and test title is the same as expected 
-            prodPage.logOut();
-            var loginPageTitleText = driver.Title;
-            Assert.That(loginPageTitleText, Is.EqualTo(loginTitleExpected));
+        }
 
-
-            //login with locked out user- test error 
+        [TestCase("locked_out_user")]
+        public void TC02_LoginLockedUser(string lockedOutUser)
+        {
+            LoginPage loginPage = new(driver);
             loginPage.login(lockedOutUser, globalPassword);
             var loginError = loginPage.GetLoginError();
             var expectedError = "Epic sadface: Sorry, this user has been locked out.";
             Assert.That(loginError, Is.EqualTo(expectedError));
-
-            loginPage.login(problemUser, globalPassword);
-            var isFirstItemCorrect = prodPage.ComparePictures();
-            Assert.That(isFirstItemCorrect, "first item in shopping list does not match expected.");
-
-            prodPage.logOut();
-            Assert.That(loginPageTitleText, Is.EqualTo(loginTitleExpected));
-
-            //Login on average takes up to 5 seconds
-            loginPage.login(performenceGlitchUser, globalPassword);
-            loginPage.implictWait(5000);
-            Assert.That(prodPage.title.Text, Is.EqualTo(expectedTitle).IgnoreCase);
-            prodPage.logOut();
-            Assert.That(loginPageTitleText, Is.EqualTo(loginTitleExpected));
-
         }
+
+        [TestCase("standard_user", "problem_user")]
+        
+        public void TC03_LoginProblemUser(string standardUser,string problemUser)
+        {
+            LoginPage loginPage = new(driver);
+            loginPage.login(standardUser, globalPassword);
+            ProductsPage prodPage = new(driver);
+            var expectedFirstItemPicture = prodPage.GetFirstPicture();
+            prodPage.logOut();
+            loginPage.login(problemUser, globalPassword);
+            var actualFirstItemPicture = prodPage.GetFirstPicture();
+            var isFirstItemCorrect = true &&actualFirstItemPicture == expectedFirstItemPicture;
+            Assert.That(isFirstItemCorrect, Is.True, "first item in shopping list does not match expected.");
+        }
+
+        [TestCase("performance_glitch_user")]
+
+        public void TC04_LoginPerformenceGlitchUser(string performenceGlitchUser)
+        {
+            LoginPage loginPage = new(driver);
+            loginPage.login(performenceGlitchUser, globalPassword);
+            ProductsPage prodPage = new(driver);
+            Assert.That(prodPage.title.Text, Is.EqualTo(expectedTitle).IgnoreCase);
+        }
+
     }
 }

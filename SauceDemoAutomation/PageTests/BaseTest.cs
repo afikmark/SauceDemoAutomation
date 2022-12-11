@@ -1,12 +1,8 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WebDriverManager.DriverConfigs.Impl;
+using WebDriverManager;
 
 namespace SauceDemoAutomation.PageTests
 {
@@ -18,6 +14,7 @@ namespace SauceDemoAutomation.PageTests
         public void SetUp()
         {
             var swagLabsURL = "https://www.saucedemo.com/";
+            new DriverManager().SetUpDriver(new ChromeConfig());
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Url = swagLabsURL;

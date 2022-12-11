@@ -12,32 +12,28 @@ namespace SauceDemoAutomation.PageObjects
     class LoginPage : BasePage
     {
         public LoginPage(IWebDriver driver) : base(driver) { }
-        public IWebElement userNameBox => Driver.FindElement(By.CssSelector("#user-name"));
-        public IWebElement userPasswordBox => Driver.FindElement(By.CssSelector("#password"));
-        public IWebElement loginButton => Driver.FindElement(By.CssSelector("#login-button"));
+        public IWebElement UserNameBox => Driver.FindElement(By.CssSelector("#user-name"));
+        public IWebElement UserPasswordBox => Driver.FindElement(By.CssSelector("#password"));
+        public IWebElement LoginButton => Driver.FindElement(By.CssSelector("#login-button"));
 
-        public IList<IWebElement> loginErrorContainer => Driver.FindElements(By.CssSelector(".error-message-container"));
+        public IWebElement LoginErrorContainer => Driver.FindElement(By.CssSelector(".error-message-container>h3"));
 
-        public IList<IWebElement> loginPageTitle => Driver.FindElements(By.CssSelector(".login_logo"));
+        public IList<IWebElement> LoginPageTitle => Driver.FindElements(By.CssSelector(".login_logo"));
 
        
         public void login(string userName, string password)
         {
-            FillText(userNameBox, userName);
-            FillText(userPasswordBox, password);
-            Click(loginButton);
+            FillText(UserNameBox, userName);
+            FillText(UserPasswordBox, password);
+            Click(LoginButton);
         }
 
       
 
         public string GetLoginError()
         {
-            var getError = " ";
-            for (int i = 0; i < loginErrorContainer.Count; i++)
-            {
-                getError = loginErrorContainer[i].Text;
-            }
-            return getError;
+            var getError = LoginErrorContainer;
+            return getError.Text;
         }
     }
 }
