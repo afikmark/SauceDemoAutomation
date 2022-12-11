@@ -9,7 +9,6 @@ namespace SauceDemoAutomation.PageTests
     {
         private const string globalPassword = "secret_sauce";
         private const string expectedTitle = "Products";
-        private const string loginTitleExpected = "Swag Labs";
        
         public string Getstandard_User { get; }
         public string GetGlobalPassword { get; }
