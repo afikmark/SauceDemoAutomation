@@ -27,7 +27,5 @@ namespace SauceDemoAutomation.PageTests
         {
             driver.Quit();
         }
-
-
     }
 }

@@ -27,8 +27,6 @@ namespace SauceDemoAutomation.PageTests
             prodPage.logOut();
         }
 
-
-
         [TestCase("locked_out_user")]
         public void TC02_LoginLockedUser(string lockedOutUser)
         {

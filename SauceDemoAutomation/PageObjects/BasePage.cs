@@ -7,76 +7,77 @@ using System.Drawing;
 
 namespace SauceDemoAutomation.PageObjects
 {
-	[Property("Owner", "Afik")]
-	class BasePage
-	{
-		public BasePage(IWebDriver driver)
-		{
-			Driver = driver;
-		}
-		
-	
-
-		public void ExplicitWait_StringInElement(int timeInMilliSeconds, IWebElement element, string text)
+    [Property("Owner", "Afik")]
+    class BasePage
+    {
+        public BasePage(IWebDriver driver)
         {
-			
-			var wait = new WebDriverWait(Driver, TimeSpan.FromMilliseconds(timeInMilliSeconds));
-			wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.TextToBePresentInElement(element, text));
-
-
-		}
-
-		public void implictWait(int timeInMilliSeconds)
-        {
-			Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(timeInMilliSeconds);
-		}
-
-		public IWebDriver Driver { get; set; }
-
-		public void FillText(IWebElement el, string text)
-		{
-			el.Clear();
-			el.SendKeys(text);
-		}
-
-		public void Click(IWebElement el)
-		{
-		
-			el.Click();
-		}
-
-		public string GetText(IWebElement el)
-		{
-			return el.Text;
-		}
-
-		public void TakeElementScreenShot(WebElement element, string screenShotPath,string screenShotName)
-        {
-			element.GetScreenshot().SaveAsFile(screenShotPath+screenShotName+".PNG");
+            Driver = driver;
         }
 
 
-		public bool CompareBitmaps(string firstImgPath, string secondImgPath)
+
+        public void ExplicitWait_StringInElement(int timeInMilliSeconds, IWebElement element, string text)
         {
-            try { 
-			Bitmap firstBtimap = new Bitmap(firstImgPath);
-			Bitmap secondBitmap = new Bitmap(secondImgPath);
-			var areEqual = firstBtimap.Size.Equals(secondBitmap.Size);
-				return areEqual;
-			}
-			catch(Exception e)
+
+            var wait = new WebDriverWait(Driver, TimeSpan.FromMilliseconds(timeInMilliSeconds));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.TextToBePresentInElement(element, text));
+
+
+        }
+
+        public void implictWait(int timeInMilliSeconds)
+        {
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(timeInMilliSeconds);
+        }
+
+        public IWebDriver Driver { get; set; }
+
+        public void FillText(IWebElement el, string text)
+        {
+            el.Clear();
+            el.SendKeys(text);
+        }
+
+        public void Click(IWebElement el)
+        {
+
+            el.Click();
+        }
+
+        public string GetText(IWebElement el)
+        {
+            return el.Text;
+        }
+
+        public void TakeElementScreenShot(WebElement element, string screenShotPath, string screenShotName)
+        {
+            element.GetScreenshot().SaveAsFile(screenShotPath+screenShotName+".PNG");
+        }
+
+
+        public bool CompareBitmaps(string firstImgPath, string secondImgPath)
+        {
+            try
             {
-				Console.WriteLine(e.Message);
-				return false;
+                Bitmap firstBtimap = new Bitmap(firstImgPath);
+                Bitmap secondBitmap = new Bitmap(secondImgPath);
+                var areEqual = firstBtimap.Size.Equals(secondBitmap.Size);
+                return areEqual;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
             }
 
-               
+
         }
 
-		public string GetTitle()
+        public string GetTitle()
         {
-			return Driver.Title;
+            return Driver.Title;
         }
 
-	}
+    }
 }

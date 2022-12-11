@@ -26,7 +26,7 @@ namespace SauceDemoAutomation.PageObjects
 
         public IWebElement logoutBtn => Driver.FindElement(By.CssSelector("#logout_sidebar_link"));
 
-      
+
 
 
 
@@ -37,7 +37,7 @@ namespace SauceDemoAutomation.PageObjects
             Click(logoutBtn);
         }
 
-        public Tuple<bool,IList> FindDescriptionErrors(IList<string> blackList)
+        public Tuple<bool, IList> FindDescriptionErrors(IList<string> blackList)
         {
             var isWordFound = false;
             List<string> blackListedWordsFound = new List<string>();
@@ -50,9 +50,9 @@ namespace SauceDemoAutomation.PageObjects
                     if (itemText.Contains(blackListStringLower))
                     {
                         Console.WriteLine("A black listed word was found" + ":" + blackListString);
-                        isWordFound = true;    
+                        isWordFound = true;
                         blackListedWordsFound.Add(blackListString);
-                
+
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace SauceDemoAutomation.PageObjects
             return firstItemStr;
         }
 
-        
+
 
 
 

@@ -12,7 +12,7 @@ namespace SauceDemoAutomation.PageTests
         [SetUp]
         public void Login()
         {
-            LoginPage loginPage = new (driver);
+            LoginPage loginPage = new(driver);
             loginPage.login("standard_user", "secret_sauce");
         }
         [Test]
@@ -26,10 +26,10 @@ namespace SauceDemoAutomation.PageTests
                 "Devlopment"
             };
             ProductsPage productsPage = new(driver);
-            var blackListStringsFound =productsPage.FindDescriptionErrors(blackListedWords);
+            var blackListStringsFound = productsPage.FindDescriptionErrors(blackListedWords);
             var isBlackListedWordsFound = blackListStringsFound.Item1;
             var blackListedWordsList = blackListStringsFound.Item2;
-            Assert.That(isBlackListedWordsFound, Is.False,$"black listed words found! {blackListedWordsList}");
+            Assert.That(isBlackListedWordsFound, Is.False, $"black listed words found! {blackListedWordsList}");
         }
     }
 }

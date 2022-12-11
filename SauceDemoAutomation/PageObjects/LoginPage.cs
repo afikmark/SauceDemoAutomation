@@ -20,7 +20,6 @@ namespace SauceDemoAutomation.PageObjects
 
         public IList<IWebElement> LoginPageTitle => Driver.FindElements(By.CssSelector(".login_logo"));
 
-       
         public void login(string userName, string password)
         {
             FillText(UserNameBox, userName);
@@ -28,7 +27,7 @@ namespace SauceDemoAutomation.PageObjects
             Click(LoginButton);
         }
 
-      
+
 
         public string GetLoginError()
         {
