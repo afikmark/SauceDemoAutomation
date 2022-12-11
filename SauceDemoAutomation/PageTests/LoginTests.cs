@@ -1,17 +1,15 @@
 ﻿using NUnit.Framework;
 using SauceDemoAutomation.PageObjects;
 
-
 namespace SauceDemoAutomation.PageTests
 {
-    [Property("Owner","Afik")]
+    [Property("Owner", "Afik")]
 
     [TestFixture]
     class LoginTests : BaseTest
     {
         private const string globalPassword = "secret_sauce";
         private const string expectedTitle = "Products";
-       
         public string Getstandard_User { get; }
         public string GetGlobalPassword { get; }
 
@@ -38,8 +36,8 @@ namespace SauceDemoAutomation.PageTests
         }
 
         [TestCase("standard_user", "problem_user")]
-        
-        public void TC03_LoginProblemUser(string standardUser,string problemUser)
+
+        public void TC03_LoginProblemUser(string standardUser, string problemUser)
         {
             LoginPage loginPage = new(driver);
             loginPage.login(standardUser, globalPassword);
