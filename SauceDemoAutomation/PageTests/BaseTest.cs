@@ -7,6 +7,8 @@ using WebDriverManager;
 namespace SauceDemoAutomation.PageTests
 {
     [Property("Owner", "Afik")]
+
+    [TestFixture]
     public class BaseTest
     {
         public IWebDriver driver;

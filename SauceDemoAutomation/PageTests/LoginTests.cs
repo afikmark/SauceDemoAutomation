@@ -5,6 +5,8 @@ using SauceDemoAutomation.PageObjects;
 namespace SauceDemoAutomation.PageTests
 {
     [Property("Owner","Afik")]
+
+    [TestFixture]
     class LoginTests : BaseTest
     {
         private const string globalPassword = "secret_sauce";
@@ -22,7 +24,10 @@ namespace SauceDemoAutomation.PageTests
             ProductsPage prodPage = new(driver);
             var titleString = prodPage.title.Text;
             Assert.That(titleString, Is.EqualTo(expectedTitle).IgnoreCase);
+            prodPage.logOut();
         }
+
+
 
         [TestCase("locked_out_user")]
         public void TC02_LoginLockedUser(string lockedOutUser)
@@ -45,6 +50,7 @@ namespace SauceDemoAutomation.PageTests
             prodPage.logOut();
             loginPage.login(problemUser, globalPassword);
             var actualFirstItemPicture = prodPage.GetFirstPicture();
+            prodPage.logOut();
             var isFirstItemCorrect = true &&actualFirstItemPicture == expectedFirstItemPicture;
             Assert.That(isFirstItemCorrect, Is.True, "first item in shopping list does not match expected.");
         }
@@ -57,6 +63,7 @@ namespace SauceDemoAutomation.PageTests
             loginPage.login(performenceGlitchUser, globalPassword);
             ProductsPage prodPage = new(driver);
             Assert.That(prodPage.title.Text, Is.EqualTo(expectedTitle).IgnoreCase);
+            prodPage.logOut();
         }
 
     }

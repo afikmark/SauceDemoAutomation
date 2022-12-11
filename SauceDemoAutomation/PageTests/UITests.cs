@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace SauceDemoAutomation.PageTests
 {
     [Property("Owner", "Afik")]
+    [TestFixture]
     class UITests : BaseTest
     {
         [SetUp]
